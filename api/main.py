@@ -2,12 +2,21 @@ from fastapi import FastAPI, HTTPException, Query
 from database.db import fetch_all
 from typing import Optional
 import logging
+from fastapi.middleware.cors import CORSMiddleware
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Price Monitor API",
     description="API para el seguimiento de precios de libros y tendencias."
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # para desarrollo
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/", tags=["General"])
